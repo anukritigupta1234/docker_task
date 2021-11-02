@@ -3,26 +3,25 @@ trigger: none
 stages:
 - stage: Build
   displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build  
+  jobs:
+  - job:
+    displayName: test
     steps:
-    steps:
-    - task: Docker@2
-      displayName: Login to ACR
-      inputs:
-        command: login
-        containerRegistry: acr
-    - task: Docker@2
-      displayName: Login to Docker Hub
-      inputs:
-        command: login
-        containerRegistry: dockerhub
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        #containerRegistry: 'acr'
-        repository: 'acrrepo'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: '$(Build.BuildId)'
+      - task: Docker@2
+        displayName: Login to ACR
+        inputs:
+          command: login
+          containerRegistry: acr
+      - task: Docker@2
+        displayName: Login to Docker Hub
+        inputs:
+          command: login
+          containerRegistry: dockerhub
+      - task: Docker@2
+        displayName: Build and push an image to container registry
+        inputs:
+          containerRegistry: 'acr'
+          repository: 'acrrepo'
+          command: 'buildAndPush'
+          Dockerfile: 'anugupt/docker101tutorial'
+          tags: 'latest'
